@@ -1,0 +1,233 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    padding: 10px 20px;
+    outline: 1px solid rgba(53, 53, 53, 0.733);
+}
+
+.logo img {
+    height: 28px;
+}
+
+.search-bar {
+    width: 65%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.search-bar input {
+    width: 80%;
+    padding: 8px 40px;
+    border: 1px solid #ccc;
+    outline: 1px solid rgba(0, 0, 0, 0.733);
+}
+
+.icons {
+    display: flex;
+    gap: 50px;
+}
+
+.icons img {
+    height: 30px;
+    cursor: pointer;
+}
+.categories {
+    height: 50px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+}
+.categories ul{
+    list-style: none;
+    display: flex;
+    gap: 175px;
+    overflow: hidden;
+}
+.categories a{
+    font-size: 0.9;
+    text-decoration: none;
+    color: black;
+    transition: 0.1s;
+}
+.categories a:hover{
+    color: #1100ff;
+    font-size: 1.07em;
+}
+.sale-banner {
+    background-color: #C42F42; 
+    color: white;  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+}
+  
+.sale-banner-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;   
+}
+.sale-banner-content h1 {
+    font-size: 12px;  
+    font-weight: bold;  
+    margin: 0;  
+    padding: 0;
+}
+  
+.sale-banner-content h2 {
+    font-size: 10px;  
+    margin: 0;  
+    padding: 0;
+    font-weight:normal;
+}
+
+.banner {
+    width: 100vw;  
+    height: 420px; 
+    overflow: hidden; 
+    position: relative; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+}
+
+.buttons {
+    margin-top: 150px;
+    position: absolute;
+    display: flex;
+    gap: 20px; 
+}
+
+.btn {
+    height: 45px;
+    width: 200px;
+    font-size: 16px;
+    border: 2px solid white;
+    background-color: white;
+    color: black;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background-color: transparent;
+    color: white;
+}
+
+.promo-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #200037; /* Dark purple background */
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin: 20px;
+}
+
+
+.promo-text h2 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.promo-text p {
+    font-size: 14px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+
+.promo-button button {
+    background-color: #a43efb; /* Pink button */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.promo-button button:hover {
+    filter: brightness(0.5);
+}
+
+/* Discount Sections */
+.discount-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    gap: 10px;
+}
+
+.discount-box {
+    background: linear-gradient(to right, #B98AC1, #A5A3E6); /* Gradient background */
+    color: white;
+    flex: 1;
+    padding: 30px;
+    text-align: left;
+
+}
+
+.discount-box h2 {
+    margin-top: 40px;
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.shop-links {
+    display: flex;
+    justify-content: left;
+    gap: 15px;
+}
+
+.shop-links a {
+    color: white;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.shop-links a:hover {
+    filter: brightness(0.8);
+}
+.footer {
+    font-size: 14px;
+    padding: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+    text-align: center;
+}
+
+
+
+
+
