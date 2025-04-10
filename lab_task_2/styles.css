@@ -5,13 +5,17 @@ body {
     margin: 0;
     padding: 2rem;
   }
+  #checkoutForm{
+    background-color: rgb(217, 209, 247);
+  }
+  
   img {
     justify-content: center;
     max-width: 500px;
     height: auto;
   }
   form {
-    max-width: 500px;
+    width: 500px;
     margin: auto;
     padding: 2rem;
     border: 1px solid #000;
@@ -20,6 +24,7 @@ body {
   }
   
   label {
+
     display: block;
     margin: 1rem 0 0.3rem;
   }
@@ -29,7 +34,7 @@ body {
   input[type="tel"],
   input[type="date"],
   input[type="number"] {
-    width: 100%;
+    width: 482px;
     padding: 0.5rem;
     border: 1px solid #000;
     border-radius: 4px;
@@ -42,6 +47,8 @@ body {
   }
   
   button {
+    width: 500px;
+    justify-content: center;
     margin-top: 1.5rem;
     padding: 0.7rem 1.5rem;
     background-color: #000;
