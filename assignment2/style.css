@@ -400,7 +400,12 @@ body {
     margin-left: 15px;
     margin-bottom: 20px;
   }
-
+  .footer-bottom img{
+    margin-left: 30px;
+  }
+  .footer-bottom h6 {
+    margin-left: 30px;
+  }
   .social-icons {
     display: flex;
     gap: 15px;
