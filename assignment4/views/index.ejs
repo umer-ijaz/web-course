@@ -1,0 +1,43 @@
+<section class="hero">
+    <div class="hero-content">
+        <h1>Fabulously British</h1>
+        <p>Heritage fashion with a modern twist</p>
+        <a href="/products" class="btn btn-primary">Shop Now</a>
+    </div>
+    <div class="hero-image">
+        <img src="/images/banner.avif" alt="Jack Wills Heritage ">
+    </div>
+</section>
+
+<section class="featured-products">
+    <div class="container">
+        <h2>Featured Products</h2>
+        <div class="product-grid">
+            <% products.forEach(product => { %>
+                <div class="product-card">
+                    <a href="/product/<%= product.id %>">
+                        <img src="<%= product.image %>" alt="<%= product.name %>" onerror="this.src='/placeholder.svg?height=300&width=250'">
+                        <div class="product-info">
+                            <h3><%= product.name %></h3>
+                            <p class="price">£<%= product.price %></p>
+                        </div>
+                    </a>
+                    <form action="/cart/add" method="POST" style="padding: 0 1.5rem 1.5rem;">
+                        <input type="hidden" name="productId" value="<%= product.id %>">
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Add to Cart</button>
+                    </form>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</section>
+
+<section class="brand-story">
+    <div class="container">
+        <div class="story-content">
+            <h2>Our Heritage</h2>
+            <p>Since 1999, Jack Wills has been creating fabulously British clothing that celebrates the best of British heritage and culture.</p>
+            <a href="/about" class="btn btn-secondary">Learn More</a>
+        </div>
+    </div>
+</section>

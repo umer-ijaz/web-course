@@ -1,0 +1,53 @@
+<section class="checkout-page">
+    <div class="container">
+        <h1>Checkout</h1>
+        
+        <div class="checkout-grid">
+            <div class="checkout-form">
+                <h2>Delivery Information</h2>
+                
+                <form action="/checkout" method="POST">
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" required value="<%= user ? user.name : '' %>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="address">Delivery Address *</label>
+                        <textarea id="address" name="address" rows="4" required placeholder="Enter your full delivery address"></textarea>
+                    </div>
+                    
+                    <div class="payment-method">
+                        <h3>Payment Method</h3>
+                        <p><strong>Pay Later with Cash</strong> - Pay when your order is delivered</p>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                        Place Order (Pay on Delivery)
+                    </button>
+                </form>
+            </div>
+            
+            <div class="order-summary">
+                <h2>Order Summary</h2>
+                
+                <% cart.forEach(item => { %>
+                    <div class="order-item">
+                        <span><%= item.name %> × <%= item.quantity %></span>
+                        <span>£<%= (item.price * item.quantity).toFixed(2) %></span>
+                    </div>
+                <% }) %>
+                
+                <div class="order-item">
+                    <span><strong>Total</strong></span>
+                    <span><strong>£<%= cartTotal.toFixed(2) %></strong></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
