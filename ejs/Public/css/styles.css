@@ -1,0 +1,10 @@
+h1{
+    background-color: cadetblue;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+#menu li{
+    display: inline;
+}

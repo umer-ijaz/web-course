@@ -1,0 +1,29 @@
+<section class="products-header">
+    <div class="container">
+        <h1>Products</h1>
+        <div class="category-filters">
+            <a href="/products" class="filter-btn <%= !selectedCategory ? 'active' : '' %>">All</a>
+            <a href="/products?category=mens" class="filter-btn <%= selectedCategory === 'mens' ? 'active' : '' %>">Men's</a>
+            <a href="/products?category=womens" class="filter-btn <%= selectedCategory === 'womens' ? 'active' : '' %>">Women's</a>
+        </div>
+    </div>
+</section>
+
+<section class="products-grid">
+    <div class="container">
+        <div class="product-grid">
+            <% products.forEach(product => { %>
+                <div class="product-card">
+                    <a href="/product/<%= product.id %>">
+                        <img src="<%= product.image %>" alt="<%= product.name %>" onerror="this.src='/placeholder.svg?height=300&width=250'">
+                        <div class="product-info">
+                            <h3><%= product.name %></h3>
+                            <p class="category"><%= product.category === 'mens' ? "Men's" : "Women's" %></p>
+                            <p class="price">£<%= product.price %></p>
+                        </div>
+                    </a>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</section>
