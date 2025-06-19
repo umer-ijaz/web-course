@@ -1,0 +1,203 @@
+<section class="admin-dashboard">
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        <p>Welcome to the Jack Wills admin panel</p>
+        
+        <div class="admin-stats">
+            <div class="stat-card">
+                <h3>Total Products</h3>
+                <p class="stat-number"><%= products.length %></p>
+            </div>
+            <div class="stat-card">
+                <h3>Total Orders</h3>
+                <p class="stat-number"><%= orders.length %></p>
+            </div>
+            <div class="stat-card">
+                <h3>Total Users</h3>
+                <p class="stat-number"><%= users.length %></p>
+            </div>
+        </div>
+        
+        <div class="admin-actions">
+            <h2>Quick Actions</h2>
+            <div class="action-buttons">
+                <a href="/admin/products" class="btn btn-primary">Manage Products</a>
+                <a href="/admin/orders" class="btn btn-secondary">View Orders</a>
+                <a href="/admin/products/add" class="btn btn-primary">Add New Product</a>
+            </div>
+        </div>
+        
+        <div class="recent-activity">
+            <h2>Recent Orders</h2>
+            <% if (orders.length === 0) { %>
+                <p>No orders yet.</p>
+            <% } else { %>
+                <div class="recent-orders">
+                    <% orders.slice(-5).reverse().forEach(order => { %>
+                        <div class="order-summary">
+                            <div class="order-info">
+                                <strong>Order #<%= order.id %></strong>
+                                <span class="order-customer"><%= order.customerName %></span>
+                            </div>
+                            <div class="order-details">
+                                <span class="order-total">£<%= order.total.toFixed(2) %></span>
+                                <span class="order-status status-<%= order.status %>">
+                                    <%= order.status.charAt(0).toUpperCase() + order.status.slice(1) %>
+                                </span>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+                <a href="/admin/orders" class="btn btn-link">View All Orders →</a>
+            <% } %>
+        </div>
+    </div>
+</section>
+
+<style>
+.admin-dashboard {
+    padding: 2rem 0;
+}
+
+.admin-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.stat-card {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.stat-card h3 {
+    margin-bottom: 1rem;
+    color: #1a1a2e;
+    font-size: 1.1rem;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #d63384;
+    margin: 0;
+}
+
+.admin-actions {
+    margin: 3rem 0;
+}
+
+.admin-actions h2 {
+    margin-bottom: 1rem;
+    color: #1a1a2e;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.recent-activity {
+    margin-top: 3rem;
+}
+
+.recent-activity h2 {
+    margin-bottom: 1rem;
+    color: #1a1a2e;
+}
+
+.recent-orders {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+}
+
+.order-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.order-summary:last-child {
+    border-bottom: none;
+}
+
+.order-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.order-customer {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.order-details {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.order-total {
+    font-weight: 600;
+    color: #d63384;
+}
+
+.status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.status-pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-processing {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+.status-shipped {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-delivered {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+.status-cancelled {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+@media (max-width: 768px) {
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .order-summary {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .order-details {
+        align-self: flex-end;
+    }
+}
+</style>

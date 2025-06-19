@@ -1,0 +1,29 @@
+<section class="order-success">
+    <div class="container">
+        <h1>✅ Order Placed Successfully!</h1>
+        <p>Thank you for your order. We'll contact you soon to confirm delivery details.</p>
+        
+        <div class="order-details">
+            <h3>Order Details</h3>
+            <p><strong>Order ID:</strong> #<%= order.id %></p>
+            <p><strong>Customer:</strong> <%= order.customerName %></p>
+            <p><strong>Phone:</strong> <%= order.customerPhone %></p>
+            <p><strong>Address:</strong> <%= order.customerAddress %></p>
+            <p><strong>Total:</strong> £<%= order.total.toFixed(2) %></p>
+            <p><strong>Payment:</strong> Cash on Delivery</p>
+            <p><strong>Status:</strong> <%= order.status.charAt(0).toUpperCase() + order.status.slice(1) %></p>
+            
+            <h4>Items Ordered:</h4>
+            <% order.items.forEach(item => { %>
+                <p>• <%= item.name %> × <%= item.quantity %> - £<%= (item.price * item.quantity).toFixed(2) %></p>
+            <% }) %>
+        </div>
+        
+        <div style="margin-top: 2rem;">
+            <a href="/products" class="btn btn-primary">Continue Shopping</a>
+            <% if (user) { %>
+                <a href="/profile" class="btn btn-secondary">View Profile</a>
+            <% } %>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="/" class="nav-logo">
+                    <h1>JACK WILLS</h1>
+                    <span>Fabulously British</span>
+                </a>
+                
+                <ul class="nav-menu">
+                    <li><a href="/">Home</a></li>
+                    <li class="dropdown">
+                        <a href="/products">Products</a>
+                        <div class="dropdown-content">
+                            <a href="/products?category=mens">Men's</a>
+                            <a href="/products?category=womens">Women's</a>
+                        </div>
+                    </li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+                
+                <div class="nav-auth">
+                    <a href="/cart" class="cart-link">
+                        <img src="/images/shopping-bag.png" alt="Cart" style="width: 20px; height: 20px;">
+                        <% if (cartItemCount > 0) { %>
+                            <span class="cart-count"><%= cartItemCount %></span>
+                        <% } %>
+                    </a>
+                    <% if (user) { %>
+                        <% if (isAdmin) { %>
+                            <a href="/admin" style="color: #d63384; font-weight: bold;">Admin</a>
+                        <% } %>
+                        <span>Hello, <%= user.name %></span>
+                        <a href="/profile">Profile</a>
+                        <form action="/logout" method="POST" style="display: inline;">
+                            <button type="submit" class="btn-link">Logout</button>
+                        </form>
+                    <% } else { %>
+                        <a href="/login">Login</a>
+                        <a href="/register">Register</a>
+                    <% } %>
+                </div>
+                
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <% if (successMessage) { %>
+            <div class="flash-message success">
+                <%= successMessage %>
+            </div>
+        <% } %>
+        
+        <% if (errorMessage) { %>
+            <div class="flash-message error">
+                <%= errorMessage %>
+            </div>
+        <% } %>
+        
+        <%- body %>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>JACK WILLS</h3>
+                <p>Fabulously British heritage fashion since 1999</p>
+            </div>
+            <div class="footer-section">
+                <h4>Customer Service</h4>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Size Guide</a></li>
+                    <li><a href="#">Returns</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>About</h4>
+                <ul>
+                    <li><a href="/about">Our Story</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Jack Wills. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,367 @@
+<section class="admin-orders">
+    <div class="container">
+        <div class="admin-header">
+            <h1>Manage Orders</h1>
+            <div class="order-stats">
+                <span class="stat">Total Orders: <strong><%= orders.length %></strong></span>
+            </div>
+        </div>
+        
+        <% if (orders.length === 0) { %>
+            <div class="no-orders">
+                <h3>No orders found</h3>
+                <p>Orders will appear here when customers place them.</p>
+                <a href="/admin" class="btn btn-primary">Back to Dashboard</a>
+            </div>
+        <% } else { %>
+            <div class="orders-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Items</th>
+                            <th>Total</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% orders.forEach(order => { %>
+                            <tr>
+                                <td class="order-id">#<%= order.id %></td>
+                                <td>
+                                    <div class="customer-info">
+                                        <strong><%= order.customerName %></strong><br>
+                                        <small class="customer-email"><%= order.user.email %></small><br>
+                                        <small class="customer-phone"><%= order.customerPhone %></small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="order-items">
+                                        <% order.items.forEach((item, index) => { %>
+                                            <div class="item">
+                                                <%= item.name %> × <%= item.quantity %>
+                                                <% if (index < order.items.length - 1) { %><br><% } %>
+                                            </div>
+                                        <% }) %>
+                                        <small class="items-count">(<%= order.items.length %> item<%= order.items.length > 1 ? 's' : '' %>)</small>
+                                    </div>
+                                </td>
+                                <td class="total">£<%= order.total.toFixed(2) %></td>
+                                <td class="order-date">
+                                    <%= new Date(order.createdAt).toLocaleDateString('en-GB') %><br>
+                                    <small><%= new Date(order.createdAt).toLocaleTimeString('en-GB', {hour: '2-digit', minute: '2-digit'}) %></small>
+                                </td>
+                                <td>
+                                    <span class="status status-<%= order.status %>">
+                                        <%= order.status.charAt(0).toUpperCase() + order.status.slice(1) %>
+                                    </span>
+                                </td>
+                                <td class="actions">
+                                    <form action="/admin/orders/update-status/<%= order.id %>" method="POST" class="status-form">
+                                        <select name="status" onchange="this.form.submit()" class="status-select">
+                                            <option value="pending" <%= order.status === 'pending' ? 'selected' : '' %>>Pending</option>
+                                            <option value="processing" <%= order.status === 'processing' ? 'selected' : '' %>>Processing</option>
+                                            <option value="shipped" <%= order.status === 'shipped' ? 'selected' : '' %>>Shipped</option>
+                                            <option value="delivered" <%= order.status === 'delivered' ? 'selected' : '' %>>Delivered</option>
+                                            <option value="cancelled" <%= order.status === 'cancelled' ? 'selected' : '' %>>Cancelled</option>
+                                        </select>
+                                    </form>
+                                    
+                                    <button class="btn btn-sm btn-secondary" onclick="toggleOrderDetails('<%= order.id %>')">
+                                        View Details
+                                    </button>
+                                    
+                                    <div id="details-<%= order.id %>" class="order-details" style="display: none;">
+                                        <div class="details-content">
+                                            <h4>Delivery Address:</h4>
+                                            <p><%= order.customerAddress %></p>
+                                            <h4>Payment Method:</h4>
+                                            <p><%= order.paymentMethod.charAt(0).toUpperCase() + order.paymentMethod.slice(1) %> on Delivery</p>
+                                            <h4>Order Items:</h4>
+                                            <ul>
+                                                <% order.items.forEach(item => { %>
+                                                    <li><%= item.name %> × <%= item.quantity %> - £<%= (item.price * item.quantity).toFixed(2) %></li>
+                                                <% }) %>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        <% } %>
+    </div>
+</section>
+
+<style>
+.admin-orders {
+    padding: 2rem 0;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f8f9fa;
+}
+
+.admin-header h1 {
+    color: #1a1a2e;
+    margin: 0;
+}
+
+.order-stats {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.order-stats strong {
+    color: #d63384;
+}
+
+.orders-table {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.orders-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.orders-table th,
+.orders-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    vertical-align: top;
+}
+
+.orders-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #1a1a2e;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.orders-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.order-id {
+    font-weight: 600;
+    color: #1a1a2e;
+}
+
+.customer-info {
+    min-width: 150px;
+}
+
+.customer-email {
+    color: #666;
+}
+
+.customer-phone {
+    color: #888;
+}
+
+.order-items {
+    max-width: 200px;
+}
+
+.order-items .item {
+    margin-bottom: 0.25rem;
+    font-size: 0.9rem;
+    line-height: 1.3;
+}
+
+.items-count {
+    color: #666;
+    font-style: italic;
+}
+
+.total {
+    font-weight: 600;
+    color: #d63384;
+    font-size: 1.1rem;
+}
+
+.order-date {
+    min-width: 100px;
+    font-size: 0.9rem;
+}
+
+.status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.status-pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-processing {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+.status-shipped {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-delivered {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+.status-cancelled {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.actions {
+    min-width: 150px;
+}
+
+.status-form {
+    margin-bottom: 0.5rem;
+}
+
+.status-select {
+    padding: 0.25rem 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    background: white;
+    cursor: pointer;
+}
+
+.order-details {
+    position: absolute;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 1000;
+    margin-top: 0.5rem;
+    min-width: 300px;
+}
+
+.details-content {
+    padding: 1rem;
+}
+
+.details-content h4 {
+    margin-bottom: 0.5rem;
+    color: #1a1a2e;
+    font-size: 0.9rem;
+}
+
+.details-content p {
+    margin-bottom: 1rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.details-content ul {
+    margin: 0;
+    padding-left: 1rem;
+}
+
+.details-content li {
+    margin-bottom: 0.25rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.no-orders {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.no-orders h3 {
+    color: #1a1a2e;
+    margin-bottom: 1rem;
+}
+
+.no-orders p {
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+    .admin-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+    }
+    
+    .orders-table {
+        overflow-x: auto;
+    }
+    
+    .orders-table table {
+        min-width: 900px;
+    }
+    
+    .order-details {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        max-width: 90vw;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+}
+</style>
+
+<script>
+function toggleOrderDetails(orderId) {
+    const details = document.getElementById('details-' + orderId);
+    const allDetails = document.querySelectorAll('.order-details');
+    
+    // Close all other details
+    allDetails.forEach(detail => {
+        if (detail.id !== 'details-' + orderId) {
+            detail.style.display = 'none';
+        }
+    });
+    
+    // Toggle current details
+    if (details.style.display === 'none' || details.style.display === '') {
+        details.style.display = 'block';
+    } else {
+        details.style.display = 'none';
+    }
+}
+
+// Close details when clicking outside
+document.addEventListener('click', function(event) {
+    if (!event.target.closest('.actions')) {
+        document.querySelectorAll('.order-details').forEach(detail => {
+            detail.style.display = 'none';
+        });
+    }
+});
+</script>
