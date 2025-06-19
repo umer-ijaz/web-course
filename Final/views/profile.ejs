@@ -1,0 +1,22 @@
+<section class="profile">
+    <div class="container">
+        <h1>My Profile</h1>
+        
+        <div class="profile-content">
+            <div class="profile-info">
+                <h2>Account Information</h2>
+                <p><strong>Name:</strong> <%= user.name %></p>
+                <p><strong>Email:</strong> <%= user.email %></p>
+                <p><strong>Member since:</strong> 2024</p>
+            </div>
+            
+            <div class="profile-actions">
+                <h2>Quick Actions</h2>
+                <a href="/products" class="btn btn-primary">Continue Shopping</a>
+                <form action="/logout" method="POST" style="margin-top: 1rem;">
+                    <button type="submit" class="btn btn-secondary">Logout</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,229 @@
+<section class="admin-product-form">
+    <div class="container">
+        <div class="form-header">
+            <h1><%= product ? 'Edit Product' : 'Add New Product' %></h1>
+            <a href="/admin/products" class="btn btn-secondary">← Back to Products</a>
+        </div>
+        
+        <div class="form-container">
+            <form action="<%= action %>" method="POST" class="product-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Product Name *</label>
+                        <input type="text" id="name" name="name" required 
+                               value="<%= product ? product.name : '' %>"
+                               placeholder="Enter product name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="category">Category *</label>
+                        <select id="category" name="category" required>
+                            <option value="">Select Category</option>
+                            <option value="mens" <%= product && product.category === 'mens' ? 'selected' : '' %>>Men's</option>
+                            <option value="womens" <%= product && product.category === 'womens' ? 'selected' : '' %>>Women's</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="price">Price (£) *</label>
+                        <input type="number" id="price" name="price" step="0.01" min="0" required 
+                               value="<%= product ? product.price : '' %>"
+                               placeholder="0.00">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="image">Image URL *</label>
+                        <input type="url" id="image" name="image" required 
+                               value="<%= product ? product.image : '' %>"
+                               placeholder="https://example.com/image.jpg">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Description *</label>
+                    <textarea id="description" name="description" rows="4" required 
+                              placeholder="Enter product description"><%= product ? product.description : '' %></textarea>
+                </div>
+                
+                <% if (product && product.image) { %>
+                    <div class="image-preview">
+                        <label>Current Image Preview:</label>
+                        <img src="<%= product.image %>" alt="<%= product.name %>" 
+                             onerror="this.src='/placeholder.svg?height=200&width=200'">
+                    </div>
+                <% } %>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <% if (product) { %>
+                            Update Product
+                        <% } else { %>
+                            Add Product
+                        <% } %>
+                    </button>
+                    <a href="/admin/products" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<style>
+.admin-product-form {
+    padding: 2rem 0;
+}
+
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f8f9fa;
+}
+
+.form-header h1 {
+    color: #1a1a2e;
+    margin: 0;
+}
+
+.form-container {
+    max-width: 800px;
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.product-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #333;
+    font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 0.75rem;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #d63384;
+    box-shadow: 0 0 0 3px rgba(214, 51, 132, 0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.image-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.image-preview label {
+    font-weight: 600;
+    color: #333;
+    font-size: 0.9rem;
+}
+
+.image-preview img {
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+}
+
+.form-actions .btn {
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .form-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+    }
+    
+    .form-container {
+        padding: 1.5rem;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .form-actions .btn {
+        text-align: center;
+    }
+}
+</style>
+
+<script>
+// Preview image when URL is entered
+document.getElementById('image').addEventListener('input', function() {
+    const url = this.value;
+    const existingPreview = document.querySelector('.image-preview');
+    
+    if (url && url.startsWith('http')) {
+        if (!existingPreview) {
+            const previewDiv = document.createElement('div');
+            previewDiv.className = 'image-preview';
+            previewDiv.innerHTML = `
+                <label>Image Preview:</label>
+                <img src="${url}" alt="Preview" onerror="this.style.display='none'">
+            `;
+            this.parentNode.parentNode.appendChild(previewDiv);
+        } else {
+            const img = existingPreview.querySelector('img');
+            img.src = url;
+            img.style.display = 'block';
+        }
+    }
+});
+</script>

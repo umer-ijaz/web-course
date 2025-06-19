@@ -1,0 +1,77 @@
+<section class="cart-page">
+    <div class="container">
+        <h1>Shopping Cart</h1>
+        
+        <% if (cart.length === 0) { %>
+            <div class="empty-cart">
+                <h2>Your cart is empty</h2>
+                <p>Add some products to get started!</p>
+                <a href="/products" class="btn btn-primary">Continue Shopping</a>
+            </div>
+        <% } else { %>
+            <div class="cart-items">
+                <% cart.forEach(item => { %>
+                    <div class="cart-item">
+                        <img src="<%= item.image %>" alt="<%= item.name %>" onerror="this.src='/placeholder.svg?height=80&width=80'">
+                        
+                        <div class="cart-item-info">
+                            <h3><%= item.name %></h3>
+                            <p class="price">£<%= item.price.toFixed(2) %></p>
+                        </div>
+                        
+                        <form action="/cart/update" method="POST" class="quantity-controls">
+                            <input type="hidden" name="productId" value="<%= item.productId %>">
+                            <button type="button" onclick="decreaseQuantity(this)">-</button>
+                            <input type="number" name="quantity" value="<%= item.quantity %>" min="1" class="quantity-input" onchange="this.form.submit()">
+                            <button type="button" onclick="increaseQuantity(this)">+</button>
+                        </form>
+                        
+                        <div class="item-total">
+                            £<%= (item.price * item.quantity).toFixed(2) %>
+                        </div>
+                        
+                        <form action="/cart/remove" method="POST" class="cart-item-controls">
+                            <input type="hidden" name="productId" value="<%= item.productId %>">
+                            <button type="submit" class="btn btn-secondary" onclick="return confirm('Remove this item?')">Remove</button>
+                        </form>
+                    </div>
+                <% }) %>
+            </div>
+            
+            <div class="cart-summary">
+                <h3>Order Summary</h3>
+                <div class="cart-total">
+                    Total: £<%= cartTotal.toFixed(2) %>
+                </div>
+                
+                <div class="cart-actions">
+                    <a href="/products" class="btn btn-secondary">Continue Shopping</a>
+                    <% if (user) { %>
+                        <a href="/checkout" class="btn btn-primary">Proceed to Checkout</a>
+                    <% } else { %>
+                        <a href="/login" class="btn btn-primary">Login to Checkout</a>
+                        <p style="margin-top: 0.5rem; color: #666; font-size: 0.9rem;">
+                            You need to be logged in to proceed with checkout
+                        </p>
+                    <% } %>
+                </div>
+            </div>
+        <% } %>
+    </div>
+</section>
+
+<script>
+function increaseQuantity(button) {
+    const input = button.previousElementSibling;
+    input.value = parseInt(input.value) + 1;
+    input.form.submit();
+}
+
+function decreaseQuantity(button) {
+    const input = button.nextElementSibling;
+    if (parseInt(input.value) > 1) {
+        input.value = parseInt(input.value) - 1;
+        input.form.submit();
+    }
+}
+</script>

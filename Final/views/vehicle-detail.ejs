@@ -1,0 +1,211 @@
+<section class="vehicle-detail">
+    <div class="container">
+        <div class="vehicle-detail-grid">
+            <div class="vehicle-image">
+                <img src="<%= vehicle.image %>" alt="<%= vehicle.name %>" 
+                     onerror="this.src='/placeholder.svg?height=500&width=600'">
+            </div>
+            
+            <div class="vehicle-info">
+                <div class="vehicle-header">
+                    <span class="brand-badge"><%= vehicle.brand %></span>
+                    <h1><%= vehicle.name %></h1>
+                    <p class="vehicle-type">
+                        <span class="type-badge"><%= vehicle.type.charAt(0).toUpperCase() + vehicle.type.slice(1) %></span>
+                    </p>
+                </div>
+                
+                <div class="price-section">
+                    <p class="price">£<%= vehicle.price.toLocaleString() %></p>
+                    <p class="price-note">Starting price</p>
+                </div>
+                
+                <div class="description-section">
+                    <h3>Description</h3>
+                    <p class="description"><%= vehicle.description %></p>
+                </div>
+                
+                <div class="vehicle-features">
+                    <h3>Key Features</h3>
+                    <ul>
+                        <li>Premium <%= vehicle.brand %> Engineering</li>
+                        <li>Latest Safety Technology</li>
+                        <li>Fuel Efficient Performance</li>
+                        <li>Comprehensive Warranty</li>
+                        <li>Professional Service Support</li>
+                    </ul>
+                </div>
+                
+                <div class="contact-section">
+                    <h3>Interested?</h3>
+                    <p>Contact our sales team for more information and to schedule a test drive.</p>
+                    <div class="contact-buttons">
+                        <button class="btn btn-primary" onclick="alert('Contact feature coming soon!')">
+                            Contact Sales
+                        </button>
+                        <button class="btn btn-secondary" onclick="alert('Test drive booking coming soon!')">
+                            Schedule Test Drive
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="back-to-vehicles">
+            <a href="/vehicles" class="btn btn-link">← Back to Vehicles</a>
+        </div>
+    </div>
+</section>
+
+<style>
+.vehicle-detail {
+    padding: 4rem 0;
+}
+
+.vehicle-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+    margin-bottom: 2rem;
+}
+
+.vehicle-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.vehicle-header {
+    margin-bottom: 2rem;
+}
+
+.brand-badge {
+    background: #d63384;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.vehicle-info h1 {
+    margin: 1rem 0 0.5rem 0;
+    color: #1a1a2e;
+    font-size: 2.5rem;
+}
+
+.type-badge {
+    background: #f8f9fa;
+    color: #666;
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.price-section {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+}
+
+.price-section .price {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0;
+}
+
+.price-note {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0.25rem 0 0 0;
+}
+
+.description-section,
+.vehicle-features,
+.contact-section {
+    margin-bottom: 2rem;
+}
+
+.description-section h3,
+.vehicle-features h3,
+.contact-section h3 {
+    margin-bottom: 1rem;
+    color: #1a1a2e;
+    font-size: 1.3rem;
+}
+
+.description {
+    color: #666;
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+.vehicle-features ul {
+    list-style: none;
+    padding: 0;
+}
+
+.vehicle-features li {
+    padding: 0.5rem 0;
+    color: #666;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.vehicle-features li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #d63384;
+    font-weight: bold;
+}
+
+.contact-section p {
+    color: #666;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.contact-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.contact-buttons .btn {
+    flex: 1;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+}
+
+.back-to-vehicles {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid #eee;
+}
+
+@media (max-width: 768px) {
+    .vehicle-detail-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .vehicle-info h1 {
+        font-size: 2rem;
+    }
+    
+    .price-section .price {
+        font-size: 2rem;
+    }
+    
+    .contact-buttons {
+        flex-direction: column;
+    }
+}
+</style>

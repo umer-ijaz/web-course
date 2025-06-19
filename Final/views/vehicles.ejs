@@ -1,0 +1,165 @@
+<section class="vehicles-header">
+    <div class="container">
+        <h1>Vehicles Collection</h1>
+        <p class="lead">Discover our premium vehicle selection</p>
+    </div>
+</section>
+
+<section class="vehicles-grid">
+    <div class="container">
+        <% if (vehicles.length === 0) { %>
+            <div class="no-vehicles">
+                <h3>No vehicles available</h3>
+                <p>Check back soon for our latest vehicle collection!</p>
+                <a href="/products" class="btn btn-primary">Browse Other Products</a>
+            </div>
+        <% } else { %>
+            <div class="vehicle-grid">
+                <% vehicles.forEach(vehicle => { %>
+                    <div class="vehicle-card">
+                        <a href="/vehicle/<%= vehicle.id %>">
+                            <img src="<%= vehicle.image %>" alt="<%= vehicle.name %>" 
+                                 onerror="this.src='/placeholder.svg?height=300&width=400'">
+                            <div class="vehicle-info">
+                                <h3><%= vehicle.name %></h3>
+                                <p class="brand"><%= vehicle.brand %></p>
+                                <p class="type"><%= vehicle.type.charAt(0).toUpperCase() + vehicle.type.slice(1) %></p>
+                                <p class="price">£<%= vehicle.price.toLocaleString() %></p>
+                            </div>
+                        </a>
+                        <div class="vehicle-actions">
+                            <a href="/vehicle/<%= vehicle.id %>" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } %>
+    </div>
+</section>
+
+<style>
+.vehicles-header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: white;
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.vehicles-header h1 {
+    margin-bottom: 1rem;
+    font-size: 3rem;
+}
+
+.vehicles-header .lead {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+.vehicles-grid {
+    padding: 4rem 0;
+}
+
+.vehicle-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.vehicle-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.vehicle-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.vehicle-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.vehicle-info {
+    padding: 1.5rem;
+}
+
+.vehicle-info h3 {
+    margin-bottom: 0.5rem;
+    color: #1a1a2e;
+    font-size: 1.4rem;
+}
+
+.vehicle-info .brand {
+    color: #d63384;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.vehicle-info .type {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+    background: #f8f9fa;
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+}
+
+.vehicle-info .price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0;
+}
+
+.vehicle-actions {
+    padding: 0 1.5rem 1.5rem;
+}
+
+.vehicle-actions .btn {
+    width: 100%;
+    padding: 0.75rem;
+    font-weight: 600;
+}
+
+.no-vehicles {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.no-vehicles h3 {
+    color: #1a1a2e;
+    margin-bottom: 1rem;
+}
+
+.no-vehicles p {
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+    .vehicles-header h1 {
+        font-size: 2rem;
+    }
+    
+    .vehicle-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .vehicle-card {
+        margin: 0 1rem;
+    }
+}
+</style>
